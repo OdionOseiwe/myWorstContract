@@ -61,12 +61,14 @@ contract swapFireon is ERC20("fireON", "F10") {
         require(sent, "failed");
     }
 
-    function tokentotoken(
-        uint amountfrom,
-        address amountToAdress,
-        address amountfromAddress
-    ) external {
-        transferFrom(amountfromAddress, amountToAdress, amountfrom);
+    function transferFrom(
+        IERC20 token,
+        address sender,
+        address recipient,
+        uint amount
+    ) private {
+        bool sent = token.transferFrom(sender, recipient, amount);
+        require(sent, "Token transfer failed");
     }
 
     function pricingSystemforEthtoToken(uint _amount)
@@ -81,7 +83,6 @@ contract swapFireon is ERC20("fireON", "F10") {
     }
 
     function priceSystemFortokentoEth(uint _amount) public pure returns (uint) {
-        uint ethertoTransfer = _amount * 5;
-        return ethertoTransfer;
+        uint ethtoTransfer = _amount * 5;
     }
 }
